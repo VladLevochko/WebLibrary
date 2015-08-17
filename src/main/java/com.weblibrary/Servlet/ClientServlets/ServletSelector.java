@@ -21,7 +21,7 @@ public class ServletSelector extends HttpServlet{
         String type = (String) session.getAttribute("type");
         BookFull bookFull = (BookFull)session.getAttribute("bookFull");
 
-        RequestDispatcher requestDispatcher = null;
+        RequestDispatcher requestDispatcher;
 
         try{
             if (type.equals("random")){
@@ -30,7 +30,7 @@ public class ServletSelector extends HttpServlet{
                 requestDispatcher = request.getRequestDispatcher("/showBook.jsp");
             } else {
                 request.setAttribute("books", bookFull.getAll());
-                List<Book> list = (List<Book>) bookFull.getAll();
+                List<Book> list = bookFull.getAll();
                 for(Book book:list) {
                     System.out.print(book.getTitle()+" "+book.getAuthor()+" "+book.getYear());
                 }
