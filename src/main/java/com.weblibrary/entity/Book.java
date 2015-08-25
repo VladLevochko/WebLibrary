@@ -9,7 +9,7 @@ public class Book {
     String title;
     String author;
     String year;
-    List<Genre> genres=new ArrayList<>();
+    ArrayList<Genre> genres=new ArrayList<>();
 
     public Book(String title, String author, String year){
         this.title = title;
@@ -23,8 +23,8 @@ public class Book {
     @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "book_isbn")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
-    public List<Genre> getGenres() {return genres; }
-    public void setGenres(List<Genre> genres) {this.genres=genres; }
+    public ArrayList<Genre> getGenres() {return genres; }
+    public void setGenres(ArrayList<Genre> genres) {this.genres=genres; }
 
     @Id
     @GeneratedValue

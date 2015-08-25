@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3361327818">
-    <data-source source="LOCAL" name="MySQL - library@localhost" uuid="f1e582bc-70bf-4f18-9610-33b28885fbda">
+  <component name="DataSourceManagerImpl" format="xml" hash="2434069181">
+    <data-source source="LOCAL" name="MySQL - library@localhost" uuid="8a0950d6-af72-4839-bbc5-142644ba8bfb">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>

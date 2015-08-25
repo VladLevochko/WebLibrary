@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 

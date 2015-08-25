@@ -1,0 +1,166 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, sans-serif;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+#selectForm{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    color: #2e2e2e;
+}
+
+#left{
+    display: block;
+    float: left;
+    width: 49%;
+    height: 100%;
+}
+
+#divider{
+    display: block;
+    float: left;
+    background: #444444;
+    width: 0.5%;
+    height: 100%;
+    box-shadow: 0 0 5px #555;
+}
+
+#right{
+    display: block;
+    float: right;
+    width: 49%;
+    height: 100%;
+}
+
+.helloText{
+    font-size: 40px;
+    margin: 40% 0 0 0;
+    font-weight: bold;
+    text-shadow: 0 2px 2px #5c5c5c;
+}
+
+#leftForm{
+    width: 100%;
+    height: 100%;
+    display: none;
+    float: left;
+}
+
+#rightForm{
+    width: 100%;
+    height: 100%;
+    display: none;
+    float: left;
+}
+
+.showLeft{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.showRight{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.inputBlock{
+    display: block;
+    height: 60px;
+    width: 700px;
+    background: #686868;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 5px 5px #444444;
+}
+
+.inputBlock.wideInputBlock{
+    width: 900px;
+}
+
+.labelAndInput{
+    display: block;
+    float: left;
+    text-align: left;
+    margin-top: 2px;
+}
+
+.labelAndInput input{
+    display: block;
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 35px;
+    font-size: 20px;
+    border-right: 1px solid #686868;
+}
+
+.labelAndInput label{
+    font-size: 20px;
+    color: #fff;
+    margin: 5px 12px;
+    text-shadow: 0 1px 1px #444;
+}
+
+select{
+    display: block;
+    float: left;
+    margin-top: 25px;
+    width: 201px;
+    height: 37px;
+    border: none;
+    outline: none;
+    background: #fff;
+    font-size: 20px;
+    border-right: 1px solid #444444;
+}
+
+.inputButton{
+    border: none;
+    outline: none;
+    width: 97px;
+    height: 37px;
+    background: #00a6e0;
+    margin-top: 25px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputButton:hover{
+    background: #00aeec;
+}
+
+.inputButton:active{
+    background: #0093c8;
+}
+
+.bookBlock{
+    display: block;
+    width: 398px;
+    height: 320px;
+    background: url("../image/book.png");
+    margin: 20px auto;
+}
+
+.bookBlock li{
+    list-style: none;
+    padding: 10px 30px;
+    font-size: 25px;
+    text-align: left;
+    color: #fff;
+    text-shadow: 0 2px 2px #444;
+}
+
+.bookBlock li:first-child{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px 50px;
+}
+
