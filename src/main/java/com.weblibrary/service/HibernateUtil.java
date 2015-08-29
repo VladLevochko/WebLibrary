@@ -20,8 +20,7 @@ public class HibernateUtil {
             Configuration config=HibernateUtil.getInitializedConfiguration();
             factory = config.buildSessionFactory();
         }
-        Session session=factory.getCurrentSession();
-        return session;
+        return factory.getCurrentSession();
     }
 
     public static void closeSession(){

@@ -4,6 +4,8 @@ package com.weblibrary.Servlet.ClientServlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.weblibrary.dao.BookDAO;
+import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.entity.Book;
 
 import javax.servlet.ServletException;
@@ -28,9 +30,8 @@ public class ServletRandomFinder extends HttpServlet {
         Gson gson = new Gson();
         JsonObject input = gson.fromJson(inputData, JsonElement.class).getAsJsonObject();
 
-        Book book = new Book(input.get("title").getAsString(),
-                             input.get("author").getAsString(),
-                             input.get("year").getAsString() );
+        BookDAO bookDAO = new BookDAOHibernateImpl();
+        Book book = bookDAO.findBook(input.get("genre1").getAsString());
 
         response.setContentType("application/json");
         response.getOutputStream().print(gson.toJson(book));

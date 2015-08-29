@@ -18,11 +18,11 @@ public class BookFull {
     }
 
     public Book getRandom(){
-
         Random random = new Random();
-        Book[] asArray = (Book[]) books.toArray();
-        Book book = asArray[random.nextInt(asArray.length)];
-        books.remove(book);
+        int number = random.nextInt(books.size());
+        Book book = books.get(number);
+        books.remove(number);
+        System.out.println(number + " " + books.size());
         return book;
     }
 

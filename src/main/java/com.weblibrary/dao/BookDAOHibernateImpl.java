@@ -31,16 +31,15 @@ public class BookDAOHibernateImpl implements BookDAO {
     }
 
     public BookFull findAll(String title,String author,String year, String genre){
-
         Session session = HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
-
         if (!title.equals("")) c1.add(Restrictions.eq("title", title));
         if (!author.equals("")) c1.add(Restrictions.eq("author", author));
         if (!year.equals("")) c1.add(Restrictions.eq("year", year));
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
-        ArrayList<Book> books= (ArrayList<Book>) c1.list();
+        List<Book> books = c1.list();
+
         LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<>(books);
         books = new ArrayList<>(linkedHashSet);
         HibernateUtil.commitTransaction();
@@ -58,12 +57,12 @@ public class BookDAOHibernateImpl implements BookDAO {
         HibernateUtil.commitTransaction();
     }
 
-    public Book findBook(String title,String author,String year){
+    public Book findBook(String genre){
 
         Session session=HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
-        c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-        ArrayList<Book> list= (ArrayList<Book>) c1.list();
+        c1.add(Restrictions.eq("genre", genre));
+        List<Book> list= (ArrayList<Book>) c1.list();
         HibernateUtil.commitTransaction();
         return list.get(0);
     }

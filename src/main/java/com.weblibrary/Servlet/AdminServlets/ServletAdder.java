@@ -40,7 +40,7 @@ public class ServletAdder extends HttpServlet {
         }
 
 
-        Book book = bookDao.findBook(title,author,year);
+        Book book = bookDao.findBook(title);
         String message = "Book added!";
         request.setAttribute("book", book);
         request.setAttribute("msg", message);

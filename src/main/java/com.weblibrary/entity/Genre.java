@@ -12,7 +12,7 @@ import java.util.Vector;
 public class Genre {
     long id;
     String genre;
-    List<Book> books=new ArrayList<>();
+    transient List<Book> books=new ArrayList<>();
 
     public Genre(){}
     public Genre(long id,String genre){
