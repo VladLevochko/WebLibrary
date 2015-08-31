@@ -47,7 +47,6 @@ $(document).ready(function(){
                     bookCard.append("<li>"+ item.author +"</li>");
                     bookCard.append("<li>"+ item.year +"</li>");
                     $.each(item.genres, function(i, item){
-                        console.log(item);
                         bookCard.append("<li>" + item.genre + "</li>");
                     })
                 })

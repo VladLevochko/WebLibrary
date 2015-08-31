@@ -1,6 +1,10 @@
 package com.weblibrary.Servlet.AdminServlets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
+import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.entity.Book;
 import org.hibernate.HibernateException;
 
@@ -12,26 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/findfordelete")
+@WebServlet("/delete")
 public class ServletDeleter extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ISBN = request.getParameter("isbn");
+        String inputData = request.getParameter("input data");
+        System.out.println("input data: " + inputData);
+
+        Gson gson = new Gson();
+        JsonObject input = gson.fromJson(inputData, JsonElement.class).getAsJsonObject();
+
+        String  ISBN = input.get("isbn").getAsString();
         long isbn = Integer.parseInt(ISBN);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-
-        try{
-            Book book = bookDao.findByIsbn(isbn);
-            request.setAttribute("book", book);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/delete.jsp");
-            requestDispatcher.forward(request, response);
-        } catch (HibernateException e){
-            e.printStackTrace();
-            String error = "Error deleting book! Book with this ISBN don`t exist!";
-            request.setAttribute("error", error);
-            request.setAttribute("forwardTo", "admin/admin.html");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
-            requestDispatcher.forward(request, response);
-        }
+        BookDAO bookDAO = new BookDAOHibernateImpl();
+        bookDAO.delete(isbn);
     }
 }

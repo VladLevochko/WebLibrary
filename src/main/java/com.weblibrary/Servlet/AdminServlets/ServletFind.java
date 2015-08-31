@@ -1,6 +1,10 @@
 package com.weblibrary.Servlet.AdminServlets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
+import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.entity.Book;
 import org.hibernate.HibernateException;
 
@@ -20,27 +24,25 @@ import java.io.IOException;
 @WebServlet("/finder")
 public class ServletFind extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
-        HttpSession session = request.getSession();
+        String inputData = request.getParameter("input data");
+        System.out.println("input data: " + inputData);
 
-        String ISBN = request.getParameter("isbn");
+        Gson gson = new Gson();
+        JsonObject input = gson.fromJson(inputData, JsonElement.class).getAsJsonObject();
+
+        String  ISBN = input.get("isbn").getAsString();
         long isbn = Integer.parseInt(ISBN);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
+        BookDAO bookDAO = new BookDAOHibernateImpl();
+        Book book = bookDAO.findByIsbn(isbn);
+
 
         try{
-            Book book = bookDao.findByIsbn(isbn);
-            request.setAttribute("book", book);
-            request.setAttribute("msg", "Book found!");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/view.jsp");
-            requestDispatcher.forward(request, response);
-
-        } catch (Exception e){
+            response.setContentType("application/json");
+            response.getOutputStream().print(gson.toJson(book));
+            response.getOutputStream().flush();
+        } catch(Exception e){
             e.printStackTrace();
-            String error = "Error finding book!";
-            request.setAttribute("error", error);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
-            requestDispatcher.forward(request, response);
         }
     }
 }

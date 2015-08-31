@@ -15,7 +15,7 @@ body{
     padding-top: 30px;
 }
 
-ul{
+#tabs > ul{
     display: block;
     float: left;
     position: relative;
@@ -24,7 +24,7 @@ ul{
     padding: 0;
 }
 
-#tabs li{
+#tabs > ul li{
     list-style: none;
     outline: none;
     border: none;
@@ -34,13 +34,13 @@ ul{
     box-shadow: 0 0 3px #444;
 }
 
-#tabs li.ui-tabs-selected,
-#tabs li.ui-tabs-active{
+#tabs > ul li.ui-tabs-selected,
+#tabs > ul li.ui-tabs-active{
     background: #fff;
     box-shadow: -4px 0 3px #444;
 }
 
-#tabs li a{
+#tabs > ul li a{
     display: block;
     text-decoration: none;
     width: 160px;
@@ -67,7 +67,7 @@ label{
     font-weight: bold;
 }
 
-.textinput{
+input{
     width: 300px;
     height: 30px;
     margin: 10px 0;
@@ -110,7 +110,28 @@ select{
         box-shadow: 0 1px 1px rgba(0,0,0, 0.6);
     }
 
-.viewBlock{
+
+.viewBlock > ul{
+    display: block;
     float: left;
-    width: 500px;
+    width: 398px;
+    height: 320px;
+    background: url("../image/book.png");
+    margin: 20px auto;
+    padding: 0;
+}
+
+.viewBlock > ul li{
+    list-style: none;
+    padding: 10px 0 10px 70px;
+    font-size: 25px;
+    text-align: left;
+    color: #fff;
+    text-shadow: 0 2px 2px #444;
+}
+
+.viewBlock > ul li:first-child{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px 0 20px 70px;
 }

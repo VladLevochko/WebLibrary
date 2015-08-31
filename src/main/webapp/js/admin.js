@@ -22,17 +22,18 @@ $.fn.serializeObject = function () {
 };
 
 function processData(form, action){
+    $("button").prop('disabled', true);
     var data = $(form).serializeObject();
+    $("input").val("");
 
     $.ajax({
         type: "POST",
         url: action,
-        data: {data: JSON.stringify(data)},
+        data: {'input data': JSON.stringify(data)},
         dataType: "json",
         success: function(data){
             var into = form + "Form .viewBlock";
-            $(into + "<ul></ul>").remove();
-
+            $("button").prop("disabled", false);
             switch (form){
                 case "#add":
                     showData(into, data);
@@ -42,42 +43,100 @@ function processData(form, action){
                     break;
                 case "#update":
                     showChangeableData(into, data);
-                    $(into).append("<button type = button class = submitButton onclick = updateBook()>delete</button>");
+                    $(into + " button").remove();
                     break;
                 case "#delete":
                     showData(into, data);
-                    $(into).append("<button type = button class = submitButton onclick = deleteBook()>delete</button>");
+                    $(into + " button").remove();
+                    $(into).append("<button class = submitButton onclick = 'deleteBook()'>delete</button>");
                     break;
             }
         },
         error: function(xhr, status){
+            $("button").prop("disabled", false);
             alert(status);
         }
     })
 }
 
 function showData(into, data){
-    var div = $(into).append('<ul></ul>');
+    $(into + " ul").remove();
+    $(into + " p").remove();
+    $(into).append('<ul></ul>');
+
+    var div = $(into + " ul");
     div.append("<li>"+ data.title +"</li>");
     div.append("<li>"+ data.author +"</li>");
     div.append("<li>"+ data.year +"</li>");
     $.each(data.genres, function(i, item){
-        console.log(item);
         div.append("<li>" + item.genre + "</li>");
     })
 }
 
 function showChangeableData(into, data){
-    var div = $(into).append(<form></form>);
-    div.append("<label for = title>Title</label>");
-    div.append("<input type = text name = title value=" + data.title + " id = title>");
-    div.append("<label for = author>Author</label>");
-    div.append("<input type = text name = author value=" + data.author + " id = author>");
-    div.append("<label for = year>Year</label>");
-    div.append("<input type = text name = year value=" + data.year + " id = year>");
-    div.append("<label for = isbn>ISBN</label>");
-    div.append("<input type = text name = isbn value=" + data.isbn + " id = isbn disabled>");
+    $(into + " form").remove();
+    $(into + " ul").remove();
+    $(into + " p").remove();
+    $(into).append("<form></form>");
 
-    div.append("<button class = submitButton>update</button>");
+    console.log(data);
+
+    var div = $(into + " form");
+    div.append("<label for = title>Title</label><br>");
+    div.append("<input type = text name = title value=" + data.title + " id = title><br>");
+    div.append("<label for = author>Author</label><br>");
+    div.append("<input type = text name = author value=" + data.author + " id = author><br>");
+    div.append("<label for = year>Year</label><br>");
+    div.append("<input type = text name = year value=" + data.year + " id = year><br>");
+    div.append("<label for = isbn>ISBN</label><br>");
+    div.append("<input type = text name = isbn value=" + data.isbn + " id = isbn disabled><br>");
+    $.each(data.genres, function(i, item){
+        div.append("<input type = hidden name = 'genre" + (i + 1) + "' value=" + item.genre + ">");
+    });
+    div.append("<input type = button class = 'submitButton' onclick='updateBook()' value = 'update'>");
 }
+
+function deleteBook(){
+    var data = $("#delete").serializeObject();
+    var into = $("#deleteForm .viewBlock");
+    $("button").prop('disabled', true);
+
+    $.ajax({
+        type: "POST",
+        url: "delete",
+        data: {'input data': JSON.stringify(data)},
+        dataType: "json",
+        success: function(){
+            $(into + " ul").remove();
+            $(into).append("<p>Book deleted!</p>")
+        },
+        error: function(){
+            $(into + " ul").remove();
+            $(into).append("<p>Error!</p>")
+        }
+    });
+
+    $("button").prop('disabled', false);
+}
+
+function updateBook(){
+    var data = $("#updateForm .viewBlock form").serializeObject();
+    $("button").prop('disabled', true);
+
+    $.ajax({
+        type: "POST",
+        url: "update",
+        data: {'input data': JSON.stringify(data)},
+        dataType: "json",
+        success: function(data){
+            showData("#updateForm .viewBlock", data);
+        },
+        error: function(xhr, status){
+            alert(status);
+        }
+    });
+
+    $("button").prop('disabled', false);
+}
+
 

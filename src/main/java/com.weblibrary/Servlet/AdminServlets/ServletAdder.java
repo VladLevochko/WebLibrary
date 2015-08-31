@@ -1,8 +1,13 @@
 package com.weblibrary.Servlet.AdminServlets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
+import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.entity.Book;
 import com.weblibrary.entity.Genre;
+import com.weblibrary.service.BookFull;
 import org.hibernate.HibernateException;
 
 import javax.servlet.RequestDispatcher;
@@ -12,39 +17,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet("/add")
 public class ServletAdder extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String year = request.getParameter("year");
-        String genre1 = request.getParameter("genre1");
-        String genre2 = request.getParameter("genre2");
-        String genre3 = request.getParameter("genre3");
+        String inputData = request.getParameter("input data");
+        System.out.println("input data: " + inputData);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
+        Gson gson = new Gson();
+        JsonObject input = gson.fromJson(inputData, JsonElement.class).getAsJsonObject();
 
-        System.out.println(title + author + year + genre1 + genre2 + genre3);
+        String  title = input.get("title").getAsString(),
+                author = input.get("author").getAsString(),
+                year = input.get("year").getAsString(),
+                genre1 = input.get("genre1").getAsString(),
+                genre2 = input.get("genre2").getAsString(),
+                genre3 = input.get("genre3").getAsString();
+
+        System.out.println(title + ", " + author + ", " + year + ", " + genre1 + ", " + genre2 + ", " + genre3 + ".");
+        BookDAO bookDAO = new BookDAOHibernateImpl();
+        long isbn = bookDAO.addBook(title, author, year, genre1, genre2, genre3);
+        Book book = bookDAO.findByIsbn(isbn);
+
 
         try{
-            bookDao.addBook(title,author,year,genre1,genre2,genre3);
-        } catch (HibernateException e){
+            response.setContentType("application/json");
+            response.getOutputStream().print(gson.toJson(book));
+            response.getOutputStream().flush();
+        } catch(Exception e){
             e.printStackTrace();
-            String error = "Error adding book! Book with this ISBN already exist!";
-            request.setAttribute("error", error);
-            request.setAttribute("forwardTo", "admin/admin.html");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
-            requestDispatcher.forward(request, response);
         }
-
-
-        Book book = bookDao.findBook(title);
-        String message = "Book added!";
-        request.setAttribute("book", book);
-        request.setAttribute("msg", message);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/view.jsp");
-        requestDispatcher.forward(request, response);
     }
 }
