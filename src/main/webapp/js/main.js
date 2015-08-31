@@ -36,15 +36,19 @@ $(document).ready(function(){
             data: {bookData: JSON.stringify(data)},
             dataType: "json",
             success: function(data){
+                $(".bookBlock").remove();
+                $(".textinput").val("");
+
+                console.log(data);
                 $.each(data, function(i, item){
-                    console.log(item);
                     var div = $("#leftForm").append("<div class = bookBlock><ul></ul></div>");
                     var bookCard = $(".bookBlock:last-child ul");
                     bookCard.append("<li>"+ item.title +"</li>");
                     bookCard.append("<li>"+ item.author +"</li>");
                     bookCard.append("<li>"+ item.year +"</li>");
                     $.each(item.genres, function(i, item){
-                        bookCard.append("<li>" + item + "</li>");
+                        console.log(item);
+                        bookCard.append("<li>" + item.genre + "</li>");
                     })
                 })
             },

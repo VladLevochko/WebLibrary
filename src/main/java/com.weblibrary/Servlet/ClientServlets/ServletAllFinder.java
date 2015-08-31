@@ -37,6 +37,7 @@ public class ServletAllFinder extends HttpServlet {
         BookFull bookFull = bookDAO.findAll(title, author, year, genre);
         List<Book> books = bookFull.getAll();
 
+
         try{
             response.setContentType("application/json");
             response.getOutputStream().print(gson.toJson(books));

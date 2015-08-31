@@ -70,7 +70,7 @@
         <button type = submit class = "submitButton">delete</button>
       </form>
 
-      <form action =admin.html>
+      <form action =../admin.html>
         <button type = submit class = submitButton>return</button>
       </form>
     </div>

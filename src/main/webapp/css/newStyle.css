@@ -82,6 +82,7 @@ html, body{
 
 .inputBlock.wideInputBlock{
     width: 901px;
+
 }
 
 .labelAndInput{
@@ -119,6 +120,10 @@ select{
     background: #fff;
     font-size: 20px;
     border-right: 1px solid #444444;
+}
+
+.wideInputBlock select{
+    margin-top: 23px;
 }
 
 .inputButton{

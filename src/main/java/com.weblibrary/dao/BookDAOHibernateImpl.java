@@ -37,7 +37,6 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!author.equals("")) c1.add(Restrictions.eq("author", author));
         if (!year.equals("")) c1.add(Restrictions.eq("year", year));
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
-
         List<Book> books = c1.list();
 
         LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<>(books);
