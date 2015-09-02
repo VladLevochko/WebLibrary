@@ -34,6 +34,7 @@ function processData(form, action){
         success: function(data){
             var into = form + "Form .viewBlock";
             $("button").prop("disabled", false);
+
             switch (form){
                 case "#add":
                     showData(into, data);
@@ -48,7 +49,7 @@ function processData(form, action){
                 case "#delete":
                     showData(into, data);
                     $(into + " button").remove();
-                    $(into).append("<button class = submitButton onclick = 'deleteBook()'>delete</button>");
+                    $(into).append("<button class = submitButton onclick = 'deleteBook(" + data + ")'>delete</button>");
                     break;
             }
         },
@@ -56,7 +57,7 @@ function processData(form, action){
             $("button").prop("disabled", false);
             alert(status);
         }
-    })
+    });
 }
 
 function showData(into, data){
@@ -83,21 +84,26 @@ function showChangeableData(into, data){
 
     var div = $(into + " form");
     div.append("<label for = title>Title</label><br>");
-    div.append("<input type = text name = title value=" + data.title + " id = title><br>");
+    div.append("<input type = text name = title value= '" + data.title + "' id = title><br>");
     div.append("<label for = author>Author</label><br>");
-    div.append("<input type = text name = author value=" + data.author + " id = author><br>");
+    div.append("<input type = text name = author value= '" + data.author + "' id = author><br>");
     div.append("<label for = year>Year</label><br>");
-    div.append("<input type = text name = year value=" + data.year + " id = year><br>");
-    div.append("<label for = isbn>ISBN</label><br>");
-    div.append("<input type = text name = isbn value=" + data.isbn + " id = isbn disabled><br>");
+    div.append("<input type = text name = year value= '" + data.year + "' id = year><br>");
+    div.append("<label for = isbn>ISBN :</label><p>" + data.isbn + "</p><br>");
     $.each(data.genres, function(i, item){
-        div.append("<input type = hidden name = 'genre" + (i + 1) + "' value=" + item.genre + ">");
+        div.append("<p>" + item.genre + "</p>");
     });
+
+    div.append("<input type = hidden name = isbn value= '" + data.isbn + "' id = isbn><br>");
+
+    div.append("<input type = hidden name = genre1 value= '" + ((data.genres.length > 0) ? data.genres[0].genre : '') + "'><br>");
+    div.append("<input type = hidden name = genre2 value= '" + ((data.genres.length > 1) ? data.genres[1].genre : '') + "'><br>");
+    div.append("<input type = hidden name = genre3 value= '" + ((data.genres.length > 2) ? data.genres[2].genre : '') + "'><br>");
+
     div.append("<input type = button class = 'submitButton' onclick='updateBook()' value = 'update'>");
 }
 
-function deleteBook(){
-    var data = $("#delete").serializeObject();
+function deleteBook(data){
     var into = $("#deleteForm .viewBlock");
     $("button").prop('disabled', true);
 
@@ -122,6 +128,7 @@ function deleteBook(){
 function updateBook(){
     var data = $("#updateForm .viewBlock form").serializeObject();
     $("button").prop('disabled', true);
+    $("#updateForm .viewBlock form").remove();
 
     $.ajax({
         type: "POST",

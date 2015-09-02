@@ -29,10 +29,9 @@ public class ServletUpdater extends HttpServlet {
                 title = input.get("title").getAsString(),
                 author = input.get("author").getAsString(),
                 year = input.get("year").getAsString(),
-                genre1 = "", genre2 = "", genre3 = "";
-        if (input.get("genre1").getAsString() != null) genre1 = input.get("genre1").getAsString();
-        if (input.get("genre2").getAsString() != null) genre2 = input.get("genre2").getAsString();
-        if (input.get("genre3").getAsString() != null) genre3 = input.get("genre3").getAsString();
+                genre1 = input.get("genre1").getAsString(),
+                genre2 = input.get("genre2").getAsString(),
+                genre3 = input.get("genre3").getAsString();
         long isbn = Integer.parseInt(ISBN);
 
         System.out.println(title + ", " + author + ", " + year + ", " + genre1 + ", " + genre2 + ", " + genre3 + ".");
