@@ -20,7 +20,7 @@ public class Book {
     public Book() {
     }
 
-    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "book_isbn")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     public List<Genre> getGenres() {return genres; }

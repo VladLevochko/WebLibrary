@@ -36,11 +36,12 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!title.equals("")) c1.add(Restrictions.eq("title", title));
         if (!author.equals("")) c1.add(Restrictions.eq("author", author));
         if (!year.equals("")) c1.add(Restrictions.eq("year", year));
-        if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
         List<Book> books = c1.list();
 
-        LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<>(books);
-        books = new ArrayList<>(linkedHashSet);
+        for(Book book:books){
+            System.out.print(book.getGenres());
+        }
+
         HibernateUtil.commitTransaction();
         return new BookFull(books);
     }
